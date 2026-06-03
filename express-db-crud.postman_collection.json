@@ -1,0 +1,975 @@
+{
+  "info": {
+    "name": "express-db-crud",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "pg_user_id",
+      "value": "1"
+    },
+    {
+      "key": "pg_product_id",
+      "value": "1"
+    },
+    {
+      "key": "pg_order_id",
+      "value": "1"
+    },
+    {
+      "key": "mongo_user_id",
+      "value": ""
+    },
+    {
+      "key": "mongo_product_id",
+      "value": ""
+    },
+    {
+      "key": "mongo_order_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "PostgreSQL \u2014 Users",
+      "item": [
+        {
+          "name": "GET all users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const users = pm.response.json();",
+                  "if (users.length) pm.collectionVariables.set('pg_user_id', users[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET user by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/users/{{pg_user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "users",
+                "{{pg_user_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST create user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const user = pm.response.json();",
+                  "if (user.id) pm.collectionVariables.set('pg_user_id', user.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dave Lee\",\n  \"email\": \"dave@test.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pg/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT update user",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dave Lee Updated\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pg/users/{{pg_user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "users",
+                "{{pg_user_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE user",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/users/{{pg_user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "users",
+                "{{pg_user_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "PostgreSQL \u2014 Products",
+      "item": [
+        {
+          "name": "GET all products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const products = pm.response.json();",
+                  "if (products.length) pm.collectionVariables.set('pg_product_id', products[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET product by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/products/{{pg_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "products",
+                "{{pg_product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST create product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const product = pm.response.json();",
+                  "if (product.id) pm.collectionVariables.set('pg_product_id', product.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"USB-C Hub\",\n  \"price\": 49.99,\n  \"stock\": 200\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pg/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT update product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 44.99,\n  \"stock\": 150\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pg/products/{{pg_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "products",
+                "{{pg_product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/products/{{pg_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "products",
+                "{{pg_product_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "PostgreSQL \u2014 Orders",
+      "item": [
+        {
+          "name": "GET all orders",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const orders = pm.response.json();",
+                  "if (orders.length) pm.collectionVariables.set('pg_order_id', orders[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "orders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET order by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/orders/{{pg_order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "orders",
+                "{{pg_order_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST create order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const order = pm.response.json();",
+                  "if (order.id) pm.collectionVariables.set('pg_order_id', order.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{pg_user_id}},\n  \"productId\": {{pg_product_id}},\n  \"quantity\": 2,\n  \"status\": \"pending\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pg/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "orders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT update order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shipped\",\n  \"quantity\": 3\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pg/orders/{{pg_order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "orders",
+                "{{pg_order_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pg/orders/{{pg_order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pg",
+                "orders",
+                "{{pg_order_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "MongoDB \u2014 Users",
+      "item": [
+        {
+          "name": "GET all users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const users = pm.response.json();",
+                  "if (users.length) pm.collectionVariables.set('mongo_user_id', users[0]._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET user by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/users/{{mongo_user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "users",
+                "{{mongo_user_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST create user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const user = pm.response.json();",
+                  "if (user._id) pm.collectionVariables.set('mongo_user_id', user._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Eve Torres\",\n  \"email\": \"eve@test.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mongo/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT update user",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Eve T.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mongo/users/{{mongo_user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "users",
+                "{{mongo_user_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE user",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/users/{{mongo_user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "users",
+                "{{mongo_user_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "MongoDB \u2014 Products",
+      "item": [
+        {
+          "name": "GET all products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const products = pm.response.json();",
+                  "if (products.length) pm.collectionVariables.set('mongo_product_id', products[0]._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET product by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/products/{{mongo_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "products",
+                "{{mongo_product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST create product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const product = pm.response.json();",
+                  "if (product._id) pm.collectionVariables.set('mongo_product_id', product._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Webcam 4K\",\n  \"price\": 89.99,\n  \"stock\": 60,\n  \"category\": \"Electronics\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mongo/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT update product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 79.99,\n  \"stock\": 55\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mongo/products/{{mongo_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "products",
+                "{{mongo_product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/products/{{mongo_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "products",
+                "{{mongo_product_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "MongoDB \u2014 Orders",
+      "item": [
+        {
+          "name": "GET all orders",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const orders = pm.response.json();",
+                  "if (orders.length) pm.collectionVariables.set('mongo_order_id', orders[0]._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "orders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET order by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/orders/{{mongo_order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "orders",
+                "{{mongo_order_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST create order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const order = pm.response.json();",
+                  "if (order._id) pm.collectionVariables.set('mongo_order_id', order._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{mongo_user_id}}\",\n  \"items\": [\n    {\n      \"productId\": \"{{mongo_product_id}}\",\n      \"quantity\": 2,\n      \"price\": 299.99\n    }\n  ],\n  \"status\": \"pending\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mongo/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "orders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT update order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shipped\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/mongo/orders/{{mongo_order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "orders",
+                "{{mongo_order_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mongo/orders/{{mongo_order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mongo",
+                "orders",
+                "{{mongo_order_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Redis \u2014 Cart",
+      "item": [
+        {
+          "name": "GET cart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/redis/cart/demo-1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "redis",
+                "cart",
+                "demo-1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST add item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"prod-101\",\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/redis/cart/demo-1/item",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "redis",
+                "cart",
+                "demo-1",
+                "item"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT set item quantity",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/redis/cart/demo-1/item/prod-101",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "redis",
+                "cart",
+                "demo-1",
+                "item",
+                "prod-101"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE remove item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/redis/cart/demo-1/item/prod-101",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "redis",
+                "cart",
+                "demo-1",
+                "item",
+                "prod-101"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE clear cart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/redis/cart/demo-1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "redis",
+                "cart",
+                "demo-1"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
